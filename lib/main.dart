@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/Main%20Screen/main_screen.dart';
+import 'package:movies_app/Theme/my_theme.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: Size(430, 932),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+         theme: MyTheme.PrimaryTheme,
+          debugShowCheckedModeBanner: false,
+        initialRoute: MainScreen.routeName,
+          routes: {
+            MainScreen.routeName:(context) => MainScreen(),
+
+          },
+        );
+      },
+    );
+  }
+}
