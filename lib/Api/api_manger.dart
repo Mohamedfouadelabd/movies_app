@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/Api/api-const.dart';
 import 'package:movies_app/model/Response/PopularSourceResponse.dart';
+import 'package:movies_app/model/Response/SearchResponse.dart';
 import 'package:movies_app/model/Response/SimilarSourceResponse.dart';
 import 'package:movies_app/model/Response/TopRatedSourceResponse.dart';
 import 'package:movies_app/model/Response/UpComingSourceResponse.dart';
@@ -100,4 +101,52 @@ Future<SimilarSourceResponse?> getSimilarResponse(String movieId)async {
 
   }
 
+
+
+
+ Future<SearchResponse?> searchMovies(String query )async{
+   final connectivityResult = await Connectivity().checkConnectivity();
+   if (connectivityResult == ConnectivityResult.mobile ||
+       connectivityResult == ConnectivityResult.wifi) {
+     Uri url =Uri.https(ApiConst.baseUrl,ApiConst.SearchMovie,{
+       'api_key': ApiConst.apiKey,
+       'query': query,
+     });
+     var response=await http.get(url);
+     var bodyString=response.body;
+     var json=jsonDecode(bodyString);
+     return SearchResponse.fromJson(json);
+   }else{
+     print('No internet connection');
+     return null;
+   }
+
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

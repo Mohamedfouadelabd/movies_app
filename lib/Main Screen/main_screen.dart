@@ -15,61 +15,53 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 0;
 
+  final List<Widget> taps = [
+    HomeScreen(),
+    Container(),
+    BrowserScreen(),
+    WatchList(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: taps[selectedIndex],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: MyTheme.primaryColor),
         child: BottomNavigationBar(
           currentIndex: selectedIndex,
-          onTap: (index) {
-            selectedIndex = index;
-            setState(() {});
+          onTap: (index) async {
+            if (index == 1) {
+              await showSearch(
+                context: context,
+                delegate: SearchScreen(),
+              );
+              return; // ما نغيرش selectedIndex
+            }
+            setState(() {
+              selectedIndex = index;
+            });
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(
-                    'assets/images/Home icon.png',
-                  ),
-                  size: 30,
-                ),
-                label: 'Home'),
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(
-                    'assets/images/search.png',
-                  ),
-                  size: 30,
-                ),
-                label: 'Search'),
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(
-                    'assets/images/Icon material-movie.png',
-                  ),
-                  size: 30,
-                ),
-                label: 'Browse'),
+              icon: Icon(Icons.movie),
+              label: 'Browse',
+            ),
             BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(
-                    'assets/images/Icon ionic-md-bookmarks.png',
-                  ),
-                  size: 30,
-                ),
-                label: 'WatchList'),
+              icon: Icon(Icons.bookmark),
+              label: 'WatchList',
+            ),
           ],
         ),
       ),
-      body: taps[selectedIndex],
     );
   }
-
-  List<Widget> taps = [
-    HomeScreen(),
-    SearchScreen(),
-    BrowserScreen(),
-    WatchList(),
-  ];
 }
