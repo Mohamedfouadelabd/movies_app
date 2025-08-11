@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movies_app/Browser/browser_screen.dart';
 import 'package:movies_app/Homescreen/home_screen.dart';
@@ -7,78 +6,70 @@ import 'package:movies_app/Theme/my_theme.dart';
 import 'package:movies_app/WatchList/watch_list.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String routeName='mainscreen';
+  static const String routeName = 'mainscreen';
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-int selectedIndex=0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       bottomNavigationBar: Theme(
-       data: Theme.of(context).copyWith(
-         canvasColor: MyTheme.primaryColor
-       ),
+        data: Theme.of(context).copyWith(canvasColor: MyTheme.primaryColor),
         child: BottomNavigationBar(
-         currentIndex: selectedIndex,
-          onTap: (index){
-           selectedIndex=index;
-        setState(() {
-
-        });
-         },
+          currentIndex: selectedIndex,
+          onTap: (index) {
+            selectedIndex = index;
+            setState(() {});
+          },
           items: [
             BottomNavigationBarItem(
-              icon:ImageIcon( AssetImage('assets/images/Home icon.png',),
-              size: 30,
-
-              ),
-label: 'Home'
-
-            ),
-            BottomNavigationBarItem(
-                icon:ImageIcon( AssetImage('assets/images/search.png',),
+                icon: ImageIcon(
+                  AssetImage(
+                    'assets/images/Home icon.png',
+                  ),
                   size: 30,
-
                 ),
-                label: 'Search'
-
-            ),
+                label: 'Home'),
             BottomNavigationBarItem(
-                icon:ImageIcon( AssetImage('assets/images/Icon material-movie.png',),
+                icon: ImageIcon(
+                  AssetImage(
+                    'assets/images/search.png',
+                  ),
                   size: 30,
-
                 ),
-                label: 'Browse'
-
-            ),
+                label: 'Search'),
             BottomNavigationBarItem(
-                icon:ImageIcon( AssetImage('assets/images/Icon ionic-md-bookmarks.png',),
+                icon: ImageIcon(
+                  AssetImage(
+                    'assets/images/Icon material-movie.png',
+                  ),
                   size: 30,
-
                 ),
-                label: 'WatchList'
-
-            ),
+                label: 'Browse'),
+            BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(
+                    'assets/images/Icon ionic-md-bookmarks.png',
+                  ),
+                  size: 30,
+                ),
+                label: 'WatchList'),
           ],
         ),
       ),
-body: taps[selectedIndex],
-
-
+      body: taps[selectedIndex],
     );
   }
 
-List<Widget>taps=[
-  HomeScreen(),
-  SearchScreen(),
-  BrowserScreen(),
-  WatchList(),
-
-];
+  List<Widget> taps = [
+    HomeScreen(),
+    SearchScreen(),
+    BrowserScreen(),
+    WatchList(),
+  ];
 }

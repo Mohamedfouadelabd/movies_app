@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 class MyTheme{
   static const Color primaryColor=Color(0xff121312);
 static const Color white= Color(0xffFFFFFF);
-  static const Color darkGray= Color(0xff707070);
+  static const Color darkGray= Color(0xff3A3737);
   static const Color yellow= Color(0xffFFBB3B);
 static ThemeData PrimaryTheme=ThemeData(
   appBarTheme: AppBarTheme(
+   centerTitle: true,
     color: Colors.transparent,
   elevation: 0,
   ),
