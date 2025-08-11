@@ -9,6 +9,7 @@ static const Color white= Color(0xffFFFFFF);
   static const Color yellow= Color(0xffFFBB3B);
 static ThemeData PrimaryTheme=ThemeData(
   appBarTheme: AppBarTheme(
+
    centerTitle: true,
     color: Colors.transparent,
   elevation: 0,

@@ -6,4 +6,5 @@ static const String topRateUrl='/3/movie/top_rated';
 static const String UpComing='/3/movie/upcoming';
   static const String imageBaseURL = 'https://image.tmdb.org/t/p/';
   static String similarMovies(String movieId) => '/3/movie/$movieId/similar';
+  static const String SearchMovie='/3/search/movie';
 }
