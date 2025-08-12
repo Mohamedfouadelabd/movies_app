@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api-const.dart';
 import 'package:movies_app/Theme/my_theme.dart';
 
+import '../../Firebase/FirebaseUtils/firebase_utils.dart';
+import '../../Firebase/my_movie.dart';
 import '../../model/Response/UpComingSourceResponse.dart';
 
 class UpcomingItem extends StatefulWidget {
@@ -40,13 +42,26 @@ class _UpcomingItemState extends State<UpcomingItem> {
                     setState(() {
                       select = !select;
                     });
+
+                    var film = MyMovie(
+                      id: widget.results.id.toString(),
+                      titel: widget.results.title ?? '',
+                      dateTime: widget.results.releaseDate ?? '',
+                      images: widget.results.posterPath ?? '',
+                      ratingImages: widget.results.voteAverage?.toString() ?? '0.0',
+                    );
+                    FireBaseUtils.addMovie(film);
+
                   },
-                  child: Image.asset(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    child: Image.asset(
                       select
                           ? 'assets/images/bookmark.png'
                           : 'assets/images/bookmark_selected.png',
-                      width: MediaQuery.of(context).size.width * 0.09,
-                      height: MediaQuery.of(context).size.height * 0.062),
+                    ),
+                  ),
                 ),
               ],
             ),
