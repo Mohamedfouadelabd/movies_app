@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/Api/api-const.dart';
+import 'package:movies_app/model/Response/MovieDiscoverSurceResponse.dart';
 import 'package:movies_app/model/Response/PopularSourceResponse.dart';
 import 'package:movies_app/model/Response/SearchResponse.dart';
 import 'package:movies_app/model/Response/SimilarSourceResponse.dart';
 import 'package:movies_app/model/Response/TopRatedSourceResponse.dart';
 import 'package:movies_app/model/Response/UpComingSourceResponse.dart';
+
+import '../model/Response/MoveListSourceResponse.dart';
 
 class ApiManger {
   ApiManger._();
@@ -39,7 +42,6 @@ https://api.themoviedb.org/3/movie/popular
       return null;
     }
   }
-
 
   Future<TopRatedSourceResponse?> getTopRatedResponse() async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -80,73 +82,76 @@ https://api.themoviedb.org/3/movie/upcoming
     }
   }
 
-Future<SimilarSourceResponse?> getSimilarResponse(String movieId)async {
-  final connectivityResult = await Connectivity().checkConnectivity();
+  Future<SimilarSourceResponse?> getSimilarResponse(String movieId) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
 
-  if (connectivityResult == ConnectivityResult.mobile ||
-      connectivityResult == ConnectivityResult.wifi) {
-    Uri url =Uri.https(ApiConst.baseUrl,ApiConst.similarMovies(movieId),{
-      'api_key': ApiConst.apiKey,
-
-    });
-    var response=await http.get(url);
-    var bodyString=response.body;
-    var json=jsonDecode(bodyString);
-    return SimilarSourceResponse.fromJson(json);
-  }else {
-    print('No internet connection');
-    return null;
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseUrl, ApiConst.similarMovies(movieId), {
+        'api_key': ApiConst.apiKey,
+      });
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return SimilarSourceResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
   }
 
-
+  Future<SearchResponse?> searchMovies(String query) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseUrl, ApiConst.SearchMovie, {
+        'api_key': ApiConst.apiKey,
+        'query': query,
+      });
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return SearchResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
   }
 
+  Future<MoveListSourceResponse?> getMovieList() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
 
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseUrl, ApiConst.MovieList, {
+        'api_key': ApiConst.apiKey,
+      });
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return MoveListSourceResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
+  }
 
+  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
 
- Future<SearchResponse?> searchMovies(String query )async{
-   final connectivityResult = await Connectivity().checkConnectivity();
-   if (connectivityResult == ConnectivityResult.mobile ||
-       connectivityResult == ConnectivityResult.wifi) {
-     Uri url =Uri.https(ApiConst.baseUrl,ApiConst.SearchMovie,{
-       'api_key': ApiConst.apiKey,
-       'query': query,
-     });
-     var response=await http.get(url);
-     var bodyString=response.body;
-     var json=jsonDecode(bodyString);
-     return SearchResponse.fromJson(json);
-   }else{
-     print('No internet connection');
-     return null;
-   }
-
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseUrl, ApiConst.MovieDiscover, {
+        'api_key': ApiConst.apiKey,
+        'with_genres': id,
+      });
+      var response = await http.get(url);
+      var bodyString = response.body;
+      var json = jsonDecode(bodyString);
+      return MovieDiscoverSourceResponse.fromJson(json);
+    } else {
+      print('No internet connection');
+      return null;
+    }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
