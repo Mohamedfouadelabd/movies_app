@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../Api/api-const.dart';
+import '../../Firebase/FirebaseUtils/firebase_utils.dart';
+import '../../Firebase/my_movie.dart';
 import '../../Theme/my_theme.dart';
 import '../../model/Response/SimilarSourceResponse.dart';
 
@@ -40,20 +42,29 @@ bool  select=true;
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       select = !select;
                     });
 
+                    var film = MyMovie(
+                      id: widget.results.id.toString(),
+                      titel: widget.results.title ?? '',
+                      dateTime: widget.results.releaseDate ?? '',
+                      images: widget.results.posterPath ?? '',
+                      ratingImages:
+                      widget.results.voteAverage?.toString() ?? '0.0',
+                    );
+                    FireBaseUtils.addMovie(film);
                   },
-
-                  child: Image.asset(select?'assets/images/bookmark.png':
-                  'assets/images/bookmark_selected.png',
-
-                      width: MediaQuery.of(context).size.width*0.09,
-                      height: MediaQuery.of(context).size.height*0.062
-
-
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    child: Image.asset(
+                      select
+                          ? 'assets/images/bookmark.png'
+                          : 'assets/images/bookmark_selected.png',
+                    ),
                   ),
                 ),
               ],

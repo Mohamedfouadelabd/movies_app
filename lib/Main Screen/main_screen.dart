@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     Container(),
     BrowserScreen(),
-    WatchList(),
+   WatchList(),
   ];
 
   @override

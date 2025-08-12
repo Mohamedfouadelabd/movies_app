@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/model/Response/TopRatedSourceResponse.dart';
 
 import '../../Api/api-const.dart';
+import '../../Firebase/FirebaseUtils/firebase_utils.dart';
+import '../../Firebase/my_movie.dart';
 import '../../Theme/my_theme.dart';
 
 class TopratedItem extends StatefulWidget {
@@ -13,14 +15,13 @@ class TopratedItem extends StatefulWidget {
 }
 
 class _TopratedItemState extends State<TopratedItem> {
-  bool select=true;
+  bool select = true;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Column(
-
           children: [
             Stack(
               children: [
@@ -29,7 +30,7 @@ class _TopratedItemState extends State<TopratedItem> {
                   child: CachedNetworkImage(
                     width: MediaQuery.of(context).size.width * 0.22,
                     imageUrl:
-                    "${ApiConst.imageBaseURL}w92${widget.results.posterPath}",
+                        "${ApiConst.imageBaseURL}w92${widget.results.posterPath}",
                     placeholder: (context, url) => CircularProgressIndicator(
                       color: MyTheme.yellow,
                     ),
@@ -37,37 +38,46 @@ class _TopratedItemState extends State<TopratedItem> {
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       select = !select;
                     });
 
+                    var film = MyMovie(
+                      id: widget.results.id.toString(),
+                      titel: widget.results.title ?? '',
+                      dateTime: widget.results.releaseDate ?? '',
+                      images: widget.results.posterPath ?? '',
+                      ratingImages:
+                          widget.results.voteAverage?.toString() ?? '0.0',
+                    );
+                    FireBaseUtils.addMovie(film);
                   },
-
-                  child: Image.asset(select?'assets/images/bookmark.png':
-                  'assets/images/bookmark_selected.png',
-
-                      width: MediaQuery.of(context).size.width*0.09,
-                      height: MediaQuery.of(context).size.height*0.062
-
-
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    child: Image.asset(
+                      select
+                          ? 'assets/images/bookmark.png'
+                          : 'assets/images/bookmark_selected.png',
+                    ),
                   ),
                 ),
               ],
-
             ),
-           Row(
-             children: [
-               Image.asset('assets/images/rating.png',
-               height: MediaQuery.of(context).size.height*0.03,
-                 width: MediaQuery.of(context).size.width*0.09,
-               ),
-               Text(widget.results.popularity.toString(),
-                 style: Theme.of(context).textTheme.titleSmall,
-
-               ),
-             ],
-           ),
+            Row(
+              children: [
+                Image.asset(
+                  'assets/images/rating.png',
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  width: MediaQuery.of(context).size.width * 0.09,
+                ),
+                Text(
+                  widget.results.popularity.toString(),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ],
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.22,
               child: Padding(
@@ -82,9 +92,7 @@ class _TopratedItemState extends State<TopratedItem> {
               ),
             ),
           ],
-
         )
-
       ],
     );
   }
