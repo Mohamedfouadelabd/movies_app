@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/Main%20Screen/main_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:movies_app/Browser/movies_discover_screen.dart';
+import 'package:movies_app/Homescreen/home_screen.dart';
+import 'package:movies_app/Homescreen/home_screen_detils.dart';
+import 'package:movies_app/Main Screen/main_screen.dart';
 import 'package:movies_app/Theme/my_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -16,12 +23,13 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-         theme: MyTheme.PrimaryTheme,
+          theme: MyTheme.PrimaryTheme,
           debugShowCheckedModeBanner: false,
-        initialRoute: MainScreen.routeName,
+          initialRoute: MainScreen.routeName,
           routes: {
-            MainScreen.routeName:(context) => MainScreen(),
-
+            MainScreen.routeName: (context) => MainScreen(),
+            HomeScreenDetils.routeName: (context) => HomeScreenDetils(),
+            MovieDiscoverScreen.routeName: (context) => MovieDiscoverScreen(),
           },
         );
       },
