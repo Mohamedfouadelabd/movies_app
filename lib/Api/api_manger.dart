@@ -10,7 +10,11 @@ import 'package:movies_app/model/Response/SimilarSourceResponse.dart';
 import 'package:movies_app/model/Response/TopRatedSourceResponse.dart';
 import 'package:movies_app/model/Response/UpComingSourceResponse.dart';
 
+import '../model/Request/LogInRequest.dart';
+import '../model/Request/RequestRegisterScreen.dart';
+import '../model/Response/LoginResponse/LoginResponse.dart';
 import '../model/Response/MoveListSourceResponse.dart';
+import '../model/Response/RegisterResponse/RegisterResponse.dart';
 
 class ApiManger {
   ApiManger._();
@@ -166,4 +170,83 @@ https://api.themoviedb.org/3/movie/upcoming
       return null;
     }
   }
+
+  Future<RegisterResponse?> register(
+      String name,
+      String email,
+      String password,
+      String rePassword,
+      String phone,
+      ) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseAuthUrl, ApiConst.registerUrl);
+
+      var requestBody = RequestRegisterScreen(
+        name: name,
+        email: email,
+        password: password,
+        rePassword: rePassword,
+        phone: phone,
+      );
+
+      var response = await http.post(url, body: requestBody.toJson());
+
+      var registerResponse =
+      RegisterResponse.fromJson(json.decode(response.body));
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return registerResponse;
+      } else {
+        return registerResponse;
+      }
+    } else {
+      return RegisterResponse(message: 'Please check internet connection');
+    }
+  }
+
+  Future<LoginResponse> Login(String email, String password) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConst.baseAuthUrl, ApiConst.loginUrl);
+
+      var requestBody = LogInRequest(
+        password: password,
+        email: email,
+      );
+
+      var response = await http.post(
+        url,
+        body: requestBody.toJson(),
+      );
+
+      var loginResponse = LoginResponse.fromJson(json.decode(response.body));
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return loginResponse;
+      } else {
+        return loginResponse;
+      }
+    } else {
+      return LoginResponse(message: 'Please check internet connection');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
