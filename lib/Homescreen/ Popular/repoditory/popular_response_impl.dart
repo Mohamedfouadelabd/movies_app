@@ -7,8 +7,8 @@ class PopularResponseImpl implements PopularResponseContract{
   PopularRemoteDataSource remoteDataSource;
   PopularResponseImpl({required this.remoteDataSource});
   @override
-  Future<PopularSourceResponse?> getPopularResponse() {
-   return remoteDataSource.getPopularResponse();
+  Future<PopularSourceResponse?> getPopularResponse({int page = 1}) {
+   return remoteDataSource.getPopularResponse(page:page );
 
   }
 

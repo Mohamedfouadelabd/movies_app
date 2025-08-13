@@ -22,20 +22,29 @@ class ApiManger {
     return _instance!;
   }
 
-  Future<PopularSourceResponse?> getPopularResponse() async {
-/*
+  Future<PopularSourceResponse?> getPopularResponse({int page = 1}) async {
+    /*
+  Example:
+  https://api.themoviedb.org/3/movie/popular?api_key=...&page=1
+  */
 
-https://api.themoviedb.org/3/movie/popular
- */
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       Uri url = Uri.https(
-          ApiConst.baseUrl, ApiConst.popularUrl, {'api_key': ApiConst.apiKey});
+        ApiConst.baseUrl,
+        ApiConst.popularUrl,
+        {
+          'api_key': ApiConst.apiKey,
+          'page': page.toString(),
+        },
+      );
+
       var response = await http.get(url);
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
+
       return PopularSourceResponse.fromJson(json);
     } else {
       print('No internet connection');
@@ -43,13 +52,14 @@ https://api.themoviedb.org/3/movie/popular
     }
   }
 
-  Future<TopRatedSourceResponse?> getTopRatedResponse() async {
+
+  Future<TopRatedSourceResponse?> getTopRatedResponse({int page = 1}) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       Uri url = Uri.https(
-          ApiConst.baseUrl, ApiConst.topRateUrl, {'api_key': ApiConst.apiKey});
+          ApiConst.baseUrl, ApiConst.topRateUrl, {'api_key': ApiConst.apiKey,'page': page.toString(),});
       var response = await http.get(url);
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
@@ -60,7 +70,7 @@ https://api.themoviedb.org/3/movie/popular
     }
   }
 
-  Future<UpComingSourceResponse?> getUpcomingResponse() async {
+  Future<UpComingSourceResponse?> getUpcomingResponse({int page = 1}) async {
 /*
 
 https://api.themoviedb.org/3/movie/upcoming
@@ -70,7 +80,7 @@ https://api.themoviedb.org/3/movie/upcoming
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       Uri url = Uri.https(
-          ApiConst.baseUrl, ApiConst.UpComing, {'api_key': ApiConst.apiKey});
+          ApiConst.baseUrl, ApiConst.UpComing, {'api_key': ApiConst.apiKey, 'page': page.toString(),});
       var response = await http.get(url);
       var bodyString = response.body;
       var json = jsonDecode(bodyString);
@@ -82,13 +92,14 @@ https://api.themoviedb.org/3/movie/upcoming
     }
   }
 
-  Future<SimilarSourceResponse?> getSimilarResponse(String movieId) async {
+  Future<SimilarSourceResponse?> getSimilarResponse(String movieId,{int page = 1}) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       Uri url = Uri.https(ApiConst.baseUrl, ApiConst.similarMovies(movieId), {
         'api_key': ApiConst.apiKey,
+     'page':page.toString(),
       });
       var response = await http.get(url);
       var bodyString = response.body;
@@ -136,7 +147,7 @@ https://api.themoviedb.org/3/movie/upcoming
     }
   }
 
-  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id) async {
+  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id,{int page = 1}) async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.mobile ||
@@ -144,6 +155,7 @@ https://api.themoviedb.org/3/movie/upcoming
       Uri url = Uri.https(ApiConst.baseUrl, ApiConst.MovieDiscover, {
         'api_key': ApiConst.apiKey,
         'with_genres': id,
+    'page':page.toString(),
       });
       var response = await http.get(url);
       var bodyString = response.body;

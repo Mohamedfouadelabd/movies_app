@@ -17,17 +17,37 @@ class SimilarView extends StatefulWidget {
 
 class _SimilarViewState extends State<SimilarView> {
   SimilarViewModel viewModel= SimilarViewModel(injectSimilarUseCase());
-@override
+  final ScrollController scrollController = ScrollController();
+
+  int currentPage = 1;
+  bool isLoadingMore = false;
+
+  @override
   void initState() {
     // TODO: implement initState
-    viewModel.gertSimilar(widget.movieId.toString());
+    viewModel.gertSimilar(widget.movieId.toString(),page: currentPage);
+    scrollController.addListener(() {
+      final position = scrollController.position;
+      if (position.pixels >= position.maxScrollExtent - 200 &&
+          !isLoadingMore &&
+          viewModel.canLoadMore(currentPage)) {
+        loadMore();
+      }
+    });
+
+  }
+  Future<void> loadMore() async {
+    setState(() => isLoadingMore = true);
+    currentPage++;
+    viewModel.gertSimilar(widget.movieId.toString(),page: currentPage);
+    setState(() => isLoadingMore = false);
   }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SimilarViewModel ,SimilarState>(
       bloc: viewModel,
         builder:(context, state) {
-if(state is SimilarLoadingState ){
+if(state is SimilarLoadingState &&currentPage==1 ){
   return CircularProgressIndicator(
     color: MyTheme.yellow,
   );
@@ -41,7 +61,8 @@ if(state is SimilarLoadingState ){
 }else if(state is SimilarSucssesState){
   var similarList=state.response?.results??[];
   return ListView.builder(
-  scrollDirection:  Axis.horizontal,
+  controller: scrollController,
+    scrollDirection:  Axis.horizontal,
     itemCount: similarList.length,
       itemBuilder: (context, index) {
         return SimilarItem(results:similarList[index] ,);
@@ -71,5 +92,10 @@ if(state is SimilarLoadingState ){
           },
 
     );
+  }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

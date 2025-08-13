@@ -6,8 +6,8 @@ class TopRatedUseCase{
   TopRatedResponseContract responseContract;
 
   TopRatedUseCase({required this.responseContract});
-  Future<TopRatedSourceResponse?> invoke(){
-   return responseContract.getTopRatedResponse();
+  Future<TopRatedSourceResponse?> invoke({int page = 1}){
+   return responseContract.getTopRatedResponse(page: page);
   }
 
 }

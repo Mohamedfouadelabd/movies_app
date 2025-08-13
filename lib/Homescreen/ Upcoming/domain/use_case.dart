@@ -6,8 +6,8 @@ class UpcomingUseCase{
   UpcomingResponseContract responseContract;
   UpcomingUseCase({required this.responseContract});
 
-Future<UpComingSourceResponse?>invoke(){
-  return responseContract.getUpcomingResponse();
+Future<UpComingSourceResponse?>invoke({int page = 1}){
+  return responseContract.getUpcomingResponse(page: page);
 
 }
 

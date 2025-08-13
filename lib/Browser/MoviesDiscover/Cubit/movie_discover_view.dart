@@ -18,17 +18,35 @@ class MovieDiscoverView extends StatefulWidget {
 class _MovieDiscoverViewState extends State<MovieDiscoverView> {
   MovieDiscoverViewModel viewModel =
       MovieDiscoverViewModel(injectMovieDiscoverUseCase());
-@override
+  final ScrollController scrollController = ScrollController();
+
+  int currentPage = 1;
+  bool isLoadingMore = false;
+  @override
   void initState() {
     // TODO: implement initState
-    viewModel.getMovieDiscover(widget.id);
+    viewModel.getMovieDiscover(widget.id,page: currentPage);
+    scrollController.addListener(() {
+      final position = scrollController.position;
+      if (position.pixels >= position.maxScrollExtent - 200 &&
+          !isLoadingMore &&
+          viewModel.canLoadMore(currentPage)) {
+        loadMore();
+      }
+    });
+  }
+  Future<void> loadMore() async {
+    setState(() => isLoadingMore = true);
+    currentPage++;
+    viewModel.getMovieDiscover(widget.id,page: currentPage);
+    setState(() => isLoadingMore = false);
   }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDiscoverViewModel, MovieDiscoverState>(
       bloc: viewModel,
       builder: (context, state) {
-        if (state is MovieDiscoverLoadingState) {
+        if (state is MovieDiscoverLoadingState&&currentPage==1) {
           return Center(
             child: CircularProgressIndicator(
               color: MyTheme.yellow,
@@ -44,6 +62,7 @@ class _MovieDiscoverViewState extends State<MovieDiscoverView> {
         } else if (state is MovieDiscoverSucssesState) {
           var movieDiscoverList = state.response?.results ?? [];
           return ListView.separated(
+            controller: scrollController,
               itemBuilder: (context, index) {
                 return MoviesDiscoverItem(
                   results: movieDiscoverList[index],
@@ -64,5 +83,10 @@ class _MovieDiscoverViewState extends State<MovieDiscoverView> {
         return Container();
       },
     );
+  }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

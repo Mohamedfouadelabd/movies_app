@@ -6,8 +6,8 @@ class SimilarUseCase {
   SimilarResponseContract responseContract;
   SimilarUseCase({required this.responseContract});
 
-  Future<SimilarSourceResponse?> invoke(String movieId) {
-    return responseContract.getSimilar(movieId);
+  Future<SimilarSourceResponse?> invoke(String movieId,{int page = 1}) {
+    return responseContract.getSimilar(movieId,page: page);
   }
 }
 

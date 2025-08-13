@@ -8,9 +8,9 @@ class SimilarResponseImpl implements SimilarResponseContract{
   SimilarRemoteDataSource remoteDataSource;
   SimilarResponseImpl({required this.remoteDataSource});
   @override
-  Future<SimilarSourceResponse?> getSimilar(String movieId) {
+  Future<SimilarSourceResponse?> getSimilar(String movieId,{int page = 1}) {
     // TODO: implement getSimilar
-    return remoteDataSource.getSimilar(movieId);
+    return remoteDataSource.getSimilar(movieId,page: page);
   }
 
 }

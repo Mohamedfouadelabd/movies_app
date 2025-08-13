@@ -7,8 +7,8 @@ class SimilarRemoteDataSourceImpl  implements SimilarRemoteDataSource{
 ApiManger apiManger;
 SimilarRemoteDataSourceImpl({required this.apiManger});
   @override
-  Future<SimilarSourceResponse?> getSimilar(String movieId) async{
-var response=await apiManger.getSimilarResponse(movieId);
+  Future<SimilarSourceResponse?> getSimilar(String movieId,{int page = 1}) async{
+var response=await apiManger.getSimilarResponse(movieId,page: page);
  return response;
   }
 

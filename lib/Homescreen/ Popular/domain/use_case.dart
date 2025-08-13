@@ -2,18 +2,17 @@ import 'package:movies_app/Homescreen/%20Popular/domain/repository/popular_respo
 import 'package:movies_app/Homescreen/%20Popular/repoditory/popular_response_impl.dart';
 import 'package:movies_app/model/Response/PopularSourceResponse.dart';
 
-class PopularUseCase{
+class PopularUseCase {
   PopularResponseContract responseContract;
+
   PopularUseCase({required this.responseContract});
-  Future<PopularSourceResponse?> invoke(){
-    return responseContract.getPopularResponse();
 
+  Future<PopularSourceResponse?> invoke({int page = 1}) {
+    return responseContract.getPopularResponse(page: page);
   }
-
-
 }
 
-PopularUseCase injectPopularUseCase(){
-return  PopularUseCase(responseContract: injectPopularResponseContract());
-
+PopularUseCase injectPopularUseCase() {
+  return PopularUseCase(responseContract: injectPopularResponseContract());
 }
+

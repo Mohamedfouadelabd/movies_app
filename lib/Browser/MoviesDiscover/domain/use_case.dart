@@ -6,8 +6,8 @@ class MovieDiscoverUseCase{
   MovieDiscoverResponseContract discoverResponseContract;
 
   MovieDiscoverUseCase({required this.discoverResponseContract});
-Future <MovieDiscoverSourceResponse?>invoke(String id){
-  return discoverResponseContract.getMovieDiscover(id);
+Future <MovieDiscoverSourceResponse?>invoke(String id,{int page = 1}){
+  return discoverResponseContract.getMovieDiscover(id,page: page);
 
 
 }

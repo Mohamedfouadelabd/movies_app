@@ -7,8 +7,8 @@ class UpcomingRemoteDataSourceImpl implements UpcomingRemoteDataSource{
   ApiManger apiManger;
   UpcomingRemoteDataSourceImpl({required this.apiManger});
   @override
-  Future<UpComingSourceResponse?> getUpcomingResponse() async{
-    var response=await apiManger.getUpcomingResponse();
+  Future<UpComingSourceResponse?> getUpcomingResponse({int page = 1}) async{
+    var response=await apiManger.getUpcomingResponse(page: page);
       return response;
     }
   }

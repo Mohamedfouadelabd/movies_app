@@ -8,8 +8,8 @@ class TopRatedResponseImpl implements TopRatedResponseContract{
   TopRatedRemoteDataSource remoteDataSource;
   TopRatedResponseImpl({required this.remoteDataSource});
   @override
-  Future<TopRatedSourceResponse?> getTopRatedResponse() {
-   return  remoteDataSource.getTopRatedResponse();
+  Future<TopRatedSourceResponse?> getTopRatedResponse({int page = 1}) {
+   return  remoteDataSource.getTopRatedResponse(page: page);
   }
 
 
