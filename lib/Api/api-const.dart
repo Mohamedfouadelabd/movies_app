@@ -9,5 +9,8 @@ static const String UpComing='/3/movie/upcoming';
   static const String SearchMovie='/3/search/movie';
   static const String MovieList='/3/genre/movie/list';///8
   static const String MovieDiscover='/3/discover/movie';
+  static const String registerUrl='api/v1/auth/signup';
+  static const String loginUrl='api/v1/auth/signin';
+  static const String baseAuthUrl='ecommerce.routemisr.com';
 
 }

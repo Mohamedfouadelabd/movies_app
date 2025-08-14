@@ -8,8 +8,8 @@ class UpcomingResponseContractImpl implements UpcomingResponseContract{
   UpcomingRemoteDataSource remoteDataSource;
   UpcomingResponseContractImpl({required this.remoteDataSource});
   @override
-  Future<UpComingSourceResponse?> getUpcomingResponse() {
-    return remoteDataSource.getUpcomingResponse();
+  Future<UpComingSourceResponse?> getUpcomingResponse({int page = 1}) {
+    return remoteDataSource.getUpcomingResponse(page: page);
   }
 }
 UpcomingResponseContract injectUpcomingResponseContract(){

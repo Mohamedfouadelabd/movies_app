@@ -8,8 +8,8 @@ class MovieDiscoverResponseImpl implements MovieDiscoverResponseContract{
   MovieDiscoverRemoteDataSource remoteDataSource;
   MovieDiscoverResponseImpl({required this.remoteDataSource});
   @override
-  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id) {
-   return remoteDataSource.getMovieDiscover(id);
+  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id,{int page = 1}) {
+   return remoteDataSource.getMovieDiscover(id,page: page);
 
   }
 

@@ -8,6 +8,9 @@ import 'package:movies_app/Homescreen/home_screen_detils.dart';
 import 'package:movies_app/Main Screen/main_screen.dart';
 import 'package:movies_app/Theme/my_theme.dart';
 
+import 'Auth/Login/login_screen.dart';
+import 'Auth/Register/register_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -25,11 +28,13 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           theme: MyTheme.PrimaryTheme,
           debugShowCheckedModeBanner: false,
-          initialRoute: MainScreen.routeName,
+          initialRoute: LoginScreen.routeName,
           routes: {
             MainScreen.routeName: (context) => MainScreen(),
             HomeScreenDetils.routeName: (context) => HomeScreenDetils(),
             MovieDiscoverScreen.routeName: (context) => MovieDiscoverScreen(),
+            RegisterScreen.routeName:(context) => RegisterScreen(),
+            LoginScreen.routeName:(context) => LoginScreen(),
           },
         );
       },

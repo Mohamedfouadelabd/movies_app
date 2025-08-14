@@ -62,7 +62,7 @@ Column(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         args.title ?? "",
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleSmall,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
@@ -72,7 +72,7 @@ Column(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         'date:  ${args.releaseDate ?? ""}',
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleSmall,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
@@ -83,7 +83,7 @@ Column(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         'voteAverage:  ${args.voteAverage.toString()??""}',
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleSmall,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,

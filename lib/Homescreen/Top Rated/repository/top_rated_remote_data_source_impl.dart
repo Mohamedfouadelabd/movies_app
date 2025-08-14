@@ -7,8 +7,8 @@ class TopRatedRemoteDataSourceImpl implements TopRatedRemoteDataSource{
  ApiManger apiManger ;
  TopRatedRemoteDataSourceImpl({required this.apiManger});
  @override
-  Future<TopRatedSourceResponse?> getTopRatedResponse() async{
-    var response=await apiManger.getTopRatedResponse();
+  Future<TopRatedSourceResponse?> getTopRatedResponse({int page = 1}) async{
+    var response=await apiManger.getTopRatedResponse(page: page);
     return response;
   }
 

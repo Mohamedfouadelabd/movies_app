@@ -7,8 +7,8 @@ class MovieDiscoverRemoteDataSourceImpl implements MovieDiscoverRemoteDataSource
   ApiManger apiManger;
   MovieDiscoverRemoteDataSourceImpl({required this.apiManger});
   @override
-  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id)async {
-    var response=await apiManger.getMovieDiscover(id);
+  Future<MovieDiscoverSourceResponse?> getMovieDiscover(String id,{int page = 1})async {
+    var response=await apiManger.getMovieDiscover(id,page: page);
   return response;
   }
 
